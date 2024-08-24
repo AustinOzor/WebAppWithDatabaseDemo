@@ -81,9 +81,15 @@ jobs:
   
   - task: SonarCloudAnalyze@1
     displayName: 'Run Code Analysis'
+- task: SonarCloudAnalyze@2
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
   
   - task: SonarCloudPublish@1
     displayName: 'Publish Quality Gate Result'
+- task: SonarCloudPublish@2
+  inputs:
+    pollingTimeoutSec: '300'
   
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact (WebApp.zip)'
