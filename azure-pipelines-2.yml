@@ -1,4 +1,11 @@
 trigger: 'none' # will disable CI builds entirely
+- task: SonarCloudPrepare@2
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'mycybrary'
+    scannerMode: 'MSBuild'
+    projectKey: 'WebAppWithDatabaseDemo'
+    projectName: 'WebAppWithDatabaseDemo'
 # - master
 pr: none
 # - master
