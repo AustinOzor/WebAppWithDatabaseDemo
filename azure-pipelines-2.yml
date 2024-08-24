@@ -1,11 +1,4 @@
 trigger: 'none' # will disable CI builds entirely
-- task: SonarCloudPrepare@2
-  inputs:
-    SonarCloud: 'SonarCloud'
-    organization: 'mycybrary'
-    scannerMode: 'MSBuild'
-    projectKey: 'WebAppWithDatabaseDemo'
-    projectName: 'WebAppWithDatabaseDemo'
 # - master
 pr: none
 # - master
@@ -81,15 +74,9 @@ jobs:
   
   - task: SonarCloudAnalyze@1
     displayName: 'Run Code Analysis'
-- task: SonarCloudAnalyze@2
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
   
   - task: SonarCloudPublish@1
     displayName: 'Publish Quality Gate Result'
-- task: SonarCloudPublish@2
-  inputs:
-    pollingTimeoutSec: '300'
   
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact (WebApp.zip)'
@@ -136,7 +123,9 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: UI-Test'
     inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'UI-Test'
+      publishLocation: 'Container'
 
 - job: Infrastructure
   displayName: 'Copy Infrastructure files (ARM)'
@@ -146,5 +135,6 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: ARM templates'
     inputs:
-      PathtoPublish: AzureResourceGroupDeployment
-      ArtifactName: arm
+      PathtoPublish: 'AzureResourceGroupDeployment'
+      ArtifactName: 'arm'
+      publishLocation: 'Container'
